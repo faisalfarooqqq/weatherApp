@@ -17,17 +17,37 @@ const getWeather = async (city) => {
 
     } catch (error) {
         console.error('error fetching weather data: ', error);
+        alert('please enter a valid city name');
         throw error;
     }
 
 };
 
+// Function to extract required information from weatherData
+const extractWeatherInfo = (weatherData) => {
+    const extractedInfo = {
+      cityName: weatherData.name,
+      countryName: weatherData.sys.country,
+      currentTime: new Date(weatherData.dt * 1000), 
+      currentTemperature: weatherData.main.temp,
+      highTemperature: weatherData.main.temp_max,
+      lowTemperature: weatherData.main.temp_min,
+      description: weatherData.weather[0].description,
+      windSpeed: weatherData.wind.speed,
+      forecast: weatherData.weather[0].main, 
+      
+    };
+  
+    return extractedInfo;
+  };
 
 const fetchAndDisplayWeather = async (city) => {
     try {
         const weatherData = await getWeather(city);
         console.log('weather data: ', weatherData);
-        displayWeather(weatherData);
+        const requiredWeatherInfo = extractWeatherInfo(weatherData);
+        console.log(requiredWeatherInfo);
+        displayWeather(requiredWeatherInfo);
     } catch (error) {
         console.error('Failed to fetch weather data:', error);
 
