@@ -35,6 +35,7 @@ const extractWeatherInfo = (weatherData) => {
       description: weatherData.weather[0].description,
       windSpeed: weatherData.wind.speed,
       forecast: weatherData.weather[0].main, 
+      weatherIconCode: weatherData.weather[0].icon,
       
     };
   
